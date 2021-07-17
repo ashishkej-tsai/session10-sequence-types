@@ -1,51 +1,55 @@
 
-# EPAi Session9 Decorators \& Monkey Patching Assignment
-Assignment to check our knowledge of Decocators and Monkey Patching.
+# EPAi3.0 Session10 Sequence Types Assignment
+Assignment to check our knowledge of Sequence Types.
 
-Write separate decorators that:
-1. allows a function to run only on odd seconds - 100pts
-2. log - 100pts
-3. authenticate - 300pts
-4. timed (n times) - 100pts
+1. A regular strictly convex polygon is a polygon that has the following characteristics:
+    1. all interior angles are less than 180
+    2. all sides have equal length
+![Polygons](./ywVyfMa1Zt.png "Polygons")
 
-Write our htmlize code using inbuild singledispatch - 100pts
+2. For a regular strictly convex polygon with:
+- n edges (=n vertices)
+- R circumradius
+- interiorAngle=(n−2)⋅180n
+- edgeLength,s=2⋅R⋅sin(πn)
+- apothem,a=R⋅cos(πn)
+- area=12⋅n⋅s⋅a
+- perimeter=n⋅s
 
-## test logged
- 
-## test odd seconds 
+3. Objective 1 [pts:400]:
+    1.Create a Polygon Class:
+        where initializer takes in:number of edges/vertices, circumradius
+        that can provide these properties:
+        - edges
+        - vertices
+        - interior angle
+        - edge length
+        - apothem
+        - area
+        - perimeter
+        that has these functionalities:
+        - a proper __repr__ function
+        - implements equality (==) based on # vertices and circumradius (__eq__)
+        - implements > based on number of vertices only (__gt__)
 
-## test authenticate
+4. Objective 2 [pts:600]:
+    1. Implement a Custom Polygon sequence type:
+        where initializer takes in:
+        - number of vertices for largest polygon in the sequence
+        - common circumradius for all polygons
+        that can provide these properties:
+        - max efficiency polygon: returns the Polygon with the highest area: perimeter ratio
+        that has these functionalities:
+        - functions as a sequence type (__getitem__)
+        - supports the len() function (__len__)
+        - has a proper representation (__repr__)
+
+5. Results:
+- Implement these 2 classes as a separate module. Access these modules in Google Colab or Deep Note or local Notebook (later you'd need to upload to GitHub)
+- Run Objective 1 module to show that the functionalities are implemented properly
+- Run Objective 2 module and show which polygon is efficient for n = 25
+- You are submitting a link to your GitHub repo, where we can find the 2 modules and your notebook in which you have called and tested them on GitHub Actions.
+- All your code must be publicly accessible (make sure to open all links in an incognito window before submitting)
 
 
-## test timed
-
-
-## test htmlize
-
-
-## test readme contents
-Check whether this README file is interesting or not by counting the number of words it has, must greater than equal to 500
-
-## test readme proper description
-Check whether this file has proper function/class description or not, by looking for these words 
-    'decorator',
-    'factory'
-
-## test readme file for formatting
-Check Mardown formatting by counting \#, it should be greater than 10
-## test indentations
-Check for four or multiple of 4 space indentation in accordance to PEP8
-## test function name had cap letter
-Function name should not have capital letter
-
-## Filler
-
-1 0 2 30 3 303 30 43403 4304 30 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 er e e e e e e e e e e e e e e e ee 
-1 0 2 30 3 303 30 43403 4304 30 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 er e e e e e e e e e e e e e e e ee 
-1 0 2 30 3 303 30 43403 4304 30 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 er e e e e e e e e e e e e e e e ee
-1 0 2 30 3 303 30 43403 4304 30 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 er e e e e e e e e e e e e e e e ee
-1 0 2 30 3 303 30 43403 4304 30 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 er e e e e e e e e e e e e e e e ee
-1 0 2 30 3 303 30 43403 4304 30 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 er e e e e e e e e e e e e e e e ee
-1 0 2 30 3 303 30 43403 4304 30 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 er e e e e e e e e e e e e e e e ee
-1 0 2 30 3 303 30 43403 4304 30 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 er e e e e e e e e e e e e e e e ee
-1 0 2 30 3 303 30 43403 4304 30 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 er e e e e e e e e e e e e e e e ee
+## test 
