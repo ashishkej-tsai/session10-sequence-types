@@ -1,123 +1,78 @@
-def run_only_odd_sec(fn):
-    from datetime import datetime
-    def inner(*args, **kwargs):
-        if (datetime.now().time().second % 2) == 1:
-            return fn(*args, **kwargs)
+import math
+
+class Polygon:
+    def __init__(self, n, R):
+        if n < 3:
+            raise ValueError('Polygon must have 3 edges/vertices.')
+        self._n = n
+        self._R = R
+        
+    def __repr__(self):
+        return f'Polygon(n={self._n}, R={self._R})'
+    
+    @property
+    def no_vertices(self):
+        return self._n
+    
+    @property
+    def no_edges(self):
+        return self._n
+    
+    @property
+    def circum_radius(self):
+        return self._R
+    
+    @property
+    def interior_angle(self):
+        return (self._n - 2) * 180.0 / self._n
+
+    @property
+    def edge_length(self):
+        return 2 * self._R * math.sin(math.pi / self._n)
+    
+    @property
+    def apothem(self):
+        return self._R * math.cos(math.pi / self._n)
+    
+    @property
+    def area(self):
+        return self._n / 2.0 * self.edge_length * self.apothem
+    
+    @property
+    def perimeter(self):
+        return self._n * self.edge_length
+    
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return (self.no_edges == other.no_edges 
+                    and self.circum_radius == other.circum_radius)
         else:
-            print('Current time is even seconds')
-    return inner
-
-@run_only_odd_sec
-def add(a,b):
-    '''
-    Add two numbers only when seconds is odd
-    '''
-    return a+b
-
-def logged(fn):
-    from functools import wraps
-    from datetime import datetime, timezone
-    @wraps(fn)
-    def inner(*args, **kwargs):
-        run_dt = datetime.now().date()
-        result = fn(*args, **kwargs)
-        print(f'{run_dt}: called {fn.__name__} with result {result}')
-        return result
-    return inner
-
-@logged
-def mult(a,b):
-    '''
-    Multiply two numbers, log the timezone when it is called
-    '''
-    return a*b
-
-def set_password():
-    '''
-    Set initial Password
-    '''
-    password = ''
-    def inner():
-        nonlocal password
-        if password == '':
-            password = input()
-        return password
-    return inner
-
-def authenticate(current_password, user_password):
-    '''
-    Decorator factory
-    '''
-    def inner_1(fn):
-        cnt = 0
-        if user_password == current_password:
-            def inner(*args, **kwargs):
-                nonlocal cnt
-                cnt += 1
-                print(f'{fn.__name__} was called {cnt} times')
-                return fn(*args, **kwargs)
-            return inner
+            return NotImplemented
+        
+    def __gt__(self, other):
+        if isinstance(other, self.__class__):
+            return self.no_vertices > other.no_vertices
         else:
-            print('You scamster!!')
-    return inner_1
+            return NotImplemented
 
-
-def calc_fib_recurse(n):
-    return 1 if n < 3 else calc_fib_recurse(n-2) + calc_fib_recurse(n-1)
-
-def timed(reps):
-    def inner_1(fn):
-        from time import perf_counter
-        def inner(*args, **kwargs):
-            total_elapsed = 0
-            for i in range(reps):
-                start = perf_counter()
-                result = fn(*args, **kwargs)
-                end = perf_counter()
-                total_elapsed += (end - start)
-            avg_run_time = total_elapsed / reps
-            print('Avg Run time: {0:.6f}s ({1} reps)'.format(avg_run_time, reps))
-            return result
-        return inner
-    return inner_1
-
-@timed(15)
-def fib(n):
-    return calc_fib_recurse(n)
-
-from functools import singledispatch
-
-@singledispatch
-def htmlize(a):
-    return escape(str(a))
-
-@htmlize.register(int)
-def html_int(a):
-    return f'{a}(<i>{str(hex(a))}</i>)'
-
-@htmlize.register(float)
-def html_real(a):
-    return f'{round(a, 2)}'
-
-from decimal import Decimal
-@htmlize.register(Decimal)
-def html_real(a):
-    return f'{round(a, 2)}'
-
-def html_escape(arg):
-    return escape(str(arg))
-
-@htmlize.register(str)
-def html_str(s):
-    return html_escape(s).replace('\n', '<br/>\n')
-
-@htmlize.register(tuple)
-@htmlize.register(list)
-def html_sequence(l):
-    items = (f'<li>{html_escape(item)}</li>' for item in l)
-    return '<ul>\n' + '\n'.join(items) + '\n</ul>'
-
-@htmlize.register(dict)
-def html_dict(d):
-    items = (f'<li>{k}={v}</li>' for k, v in d.items())
-    return '<ul>\n' + '\n'.join(items) + '\n</ul>'
+class Polygon_Sequence:
+    def __init__(self, n, R):
+        if n < 3:
+            raise ValueError('number of vertices for largest polygon in the sequence must be greater than 3')
+        self._n = n
+        self._R = R
+        self._polygons = [Polygon(i, R) for i in range(3, n+1)]
+        
+    def __len__(self):
+        return self._n - 2
+    
+    def __repr__(self):
+        return f'Polygons(n={self._n}, R={self._R})'
+    
+    def __getitem__(self, s):
+        return self._polygons[s]
+    
+    @property
+    def max_efficiency_polygon(self):
+        sorted_polygons = sorted(self._polygons, key=lambda p: p.area/p.perimeter,reverse=True)
+        return sorted_polygons[0]

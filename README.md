@@ -17,7 +17,7 @@ Assignment to check our knowledge of Sequence Types.
 - perimeter=n⋅s
 
 3. Objective 1 [pts:400]:
-    1.Create a Polygon Class:
+    1. Create a Polygon Class:
         where initializer takes in:number of edges/vertices, circumradius
         that can provide these properties:
         - edges
@@ -52,4 +52,3 @@ Assignment to check our knowledge of Sequence Types.
 - All your code must be publicly accessible (make sure to open all links in an incognito window before submitting)
 
 
-## test 
